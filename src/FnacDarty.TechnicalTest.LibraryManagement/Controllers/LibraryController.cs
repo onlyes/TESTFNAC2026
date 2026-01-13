@@ -24,11 +24,11 @@ namespace FnacDarty.TechnicalTest.LibraryManagement.Controllers
         }
 
         [HttpPost("add-book")]
-        public IActionResult AddBook([FromForm] AddBookRequest request)
+        public IActionResult AddBook([FromBody] AddBookRequest request)
         {
-            _bookService.AddBook(request.Title, request.Author);
-
-            return Ok();
+            var addedBook = _bookService.AddBook(request.Title, request.Author);
+            
+            return CreatedAtAction(nameof(GetAllBooks), new { id = addedBook.Id }, addedBook);
         }
 
 

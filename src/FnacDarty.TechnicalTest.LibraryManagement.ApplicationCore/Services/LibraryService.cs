@@ -17,7 +17,7 @@ namespace FnacDarty.TechnicalTest.LibraryManagement.Domain.Services
             return _bookRepository.GetAll();
         }
 
-        public void AddBook(string title, string author)
+        public Book AddBook(string title, string author)
         {
             var allBooks = _bookRepository.GetAll();
             var id = allBooks.Count == 0 ? 1 : allBooks.Max(b => b.Id) + 1;
@@ -25,6 +25,8 @@ namespace FnacDarty.TechnicalTest.LibraryManagement.Domain.Services
             var book = new Book(id, title, true, author);
 
             _bookRepository.AddBook(book);
+            
+            return book;
         }
 
         public IReadOnlyCollection<Customer> GetCustomersWhoBorrowedBooks(DateTime from, DateTime to)
