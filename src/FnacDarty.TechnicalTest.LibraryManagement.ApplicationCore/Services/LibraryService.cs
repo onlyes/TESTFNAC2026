@@ -6,10 +6,12 @@ namespace FnacDarty.TechnicalTest.LibraryManagement.Domain.Services
     public class LibraryService : ILibraryService
     {
         private readonly IBookRepository _bookRepository;
+        private readonly ICustomerRepository _customerRepository;
 
-        public LibraryService(IBookRepository bookRepository)
+        public LibraryService(IBookRepository bookRepository, ICustomerRepository customerRepository)
         {
             _bookRepository = bookRepository;
+            _customerRepository = customerRepository;
         }
 
         public IReadOnlyCollection<Book> GetAllBooks()
@@ -31,7 +33,15 @@ namespace FnacDarty.TechnicalTest.LibraryManagement.Domain.Services
 
         public IReadOnlyCollection<Customer> GetCustomersWhoBorrowedBooks(DateTime from, DateTime to)
         {
-            throw new NotImplementedException();
+            var allCustomers = _customerRepository.GetAll();
+
+            // Filtrer les clients qui ont emprunté des livres dans la période donnée
+            var customersWithBorrowedBooks = allCustomers
+                .Where(customer => customer.BorrowedBooks.Any(borrowedBook => 
+                    borrowedBook.BorrowedAt >= from && borrowedBook.BorrowedAt <= to))
+                .ToList();
+
+            return customersWithBorrowedBooks.AsReadOnly();
         }
     }
 }

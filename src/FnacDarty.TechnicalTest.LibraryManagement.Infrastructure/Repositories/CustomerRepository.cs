@@ -25,8 +25,10 @@ namespace FnacDarty.TechnicalTest.LibraryManagement.Infrastructure.Repositories
                 new Customer(3, "Customer 3",
                 new List<BorrowedBook>
                 {
-                    new BorrowedBook(3, new DateTime(2026,01,10))
-                })
+                    new BorrowedBook(3, new DateTime(2026,01,10)),
+                    new BorrowedBook(4, new DateTime(2026, 01, 12))
+                }),
+                new Customer(5, "Diana Moreau", new List<BorrowedBook>()) // test pour voir le cas si on a aucun livre emprunté (pas demandé)
             };
         }
         public IReadOnlyCollection<Customer> GetAll()

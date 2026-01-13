@@ -34,5 +34,6 @@ await app.RunAsync();
 void ConfigureServices(IServiceCollection services)
 {
     services.AddSingleton<IBookRepository, BookRepository>();
+    services.AddSingleton<ICustomerRepository, CustomerRepository>();
     services.AddScoped<ILibraryService, LibraryService>();
 }
